@@ -89,7 +89,7 @@ function Field({
   value: string;
   onChange: (v: string) => void;
   placeholder: string;
-  error?: string;
+  error?: string | undefined;
   type?: string;
   autoComplete?: string;
 }) {
