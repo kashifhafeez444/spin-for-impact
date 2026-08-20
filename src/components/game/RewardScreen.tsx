@@ -1,7 +1,7 @@
 import { motion } from "motion/react";
 import plantImage from "@/assets/plant.png";
 
-type Props = { onDone: () => void; code?: string };
+type Props = { onDone: () => void; code?: string | undefined };
 
 export function RewardScreen({ onDone, code }: Props) {
   return (
