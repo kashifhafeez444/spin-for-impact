@@ -1,12 +1,16 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Leaf } from "lucide-react";
 
 type Props = { density?: number; confetti?: boolean };
 
 export function BackgroundEffects({ density = 14, confetti = false }: Props) {
+  // Randomised decorations are client-only to avoid SSR hydration mismatches.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   const leaves = useMemo(
     () =>
-      Array.from({ length: density }).map((_, i) => ({
+      Array.from({ length: mounted ? density : 0 }).map((_, i) => ({
         id: i,
         left: Math.random() * 100,
         size: 12 + Math.random() * 26,
@@ -15,7 +19,7 @@ export function BackgroundEffects({ density = 14, confetti = false }: Props) {
         drift: `${(Math.random() - 0.5) * 220}px`,
         opacity: 0.12 + Math.random() * 0.3,
       })),
-    [density],
+    [density, mounted],
   );
 
   const pieces = useMemo(
@@ -32,7 +36,7 @@ export function BackgroundEffects({ density = 14, confetti = false }: Props) {
             h: 10 + Math.random() * 10,
           }))
         : [],
-    [confetti],
+    [confetti, mounted],
   );
 
   return (
