@@ -39,7 +39,7 @@ export function AnswerOption({
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.06 * index, duration: 0.3 }}
-      whileTap={locked ? undefined : { scale: 0.98 }}
+      whileTap={locked ? {} : { scale: 0.98 }}
       className={`flex w-full items-center gap-4 rounded-3xl border px-5 py-4 text-left backdrop-blur transition-colors disabled:cursor-default ${tone}`}
     >
       <span
