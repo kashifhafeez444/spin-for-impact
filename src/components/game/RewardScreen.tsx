@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
 import plantImage from "@/assets/plant.png";
+import { BrandLogo } from "./BrandLogo";
 
 type Props = { onDone: () => void; code?: string | undefined };
 
