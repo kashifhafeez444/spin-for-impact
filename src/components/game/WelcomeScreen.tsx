@@ -11,7 +11,7 @@ export function WelcomeScreen({ onStart }: { onStart: () => void }) {
       transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
       className="relative z-10 mx-auto flex min-h-[78vh] w-full max-w-3xl flex-col items-center justify-center px-5 text-center"
     >
-      <span className="mb-6 grid h-24 w-24 place-items-center rounded-3xl bg-sand p-3 ring-1 ring-primary/40">
+      <span className="mb-6 grid h-24 w-24 place-items-center rounded-3xl bg-foreground p-3 ring-1 ring-primary/40">
         <BrandLogo className="h-full w-full" />
       </span>
 

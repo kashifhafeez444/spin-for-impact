@@ -52,7 +52,7 @@ export function RewardScreen({ onDone, code }: Props) {
         Done
       </button>
 
-      <span className="mt-8 grid h-14 w-14 place-items-center rounded-2xl bg-sand p-2 ring-1 ring-primary/30">
+      <span className="mt-8 grid h-14 w-14 place-items-center rounded-2xl bg-foreground p-2 ring-1 ring-primary/30">
         <BrandLogo className="h-full w-full" />
       </span>
     </motion.section>
