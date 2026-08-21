@@ -5,15 +5,13 @@ import { AnimatePresence } from "motion/react";
 import { BackgroundEffects } from "@/components/game/BackgroundEffects";
 import { GameHeader } from "@/components/game/GameHeader";
 import { WelcomeScreen } from "@/components/game/WelcomeScreen";
-import { RegistrationScreen } from "@/components/game/RegistrationScreen";
 import { SpinWheel } from "@/components/game/SpinWheel";
-import { CategoryResult } from "@/components/game/CategoryResult";
 import { QuestionScreen } from "@/components/game/QuestionScreen";
 import { ResultScreen } from "@/components/game/ResultScreen";
 import { RewardScreen } from "@/components/game/RewardScreen";
 
 import { categories, type Category, type Question } from "@/data/esgCategories";
-import { gameService, type RegisteredParticipant } from "@/services/gameService";
+import { gameService } from "@/services/gameService";
 import {
   playSound,
   setSoundEnabled,
@@ -42,24 +40,16 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-type Screen =
-  | "welcome"
-  | "register"
-  | "wheel"
-  | "question"
-  | "result"
-  | "reward";
+type Screen = "welcome" | "wheel" | "question" | "result" | "reward";
 
 function Index() {
   const [screen, setScreen] = useState<Screen>("welcome");
   const [sound, setSound] = useState(true);
-  const [participant, setParticipant] = useState<RegisteredParticipant | null>(null);
-  const [submitting, setSubmitting] = useState(false);
 
   const [spinning, setSpinning] = useState(false);
   const [winnerIndex, setWinnerIndex] = useState<number | null>(null);
   const [category, setCategory] = useState<Category | null>(null);
-  const [showCategory, setShowCategory] = useState(false);
+
 
   const [questions, setQuestions] = useState<Question[]>([]);
   const [qIndex, setQIndex] = useState(0);
@@ -84,20 +74,9 @@ function Index() {
     unlockAudio();
     startAmbient();
     playSound("start");
-    setScreen("register");
+    setScreen("wheel");
   }, []);
 
-  const handleRegister = useCallback(async (p: { fullName: string; email: string }) => {
-    setSubmitting(true);
-    try {
-      const registered = await gameService.registerParticipant(p);
-      setParticipant(registered);
-      playSound("click");
-      setScreen("wheel");
-    } finally {
-      setSubmitting(false);
-    }
-  }, []);
 
   const handleSpin = useCallback(() => {
     if (spinning) return;
@@ -111,20 +90,15 @@ function Index() {
     setSpinning(false);
     const picked = categories[index]!;
     setCategory(picked);
-    setShowCategory(true);
     const qs = await gameService.getQuestions(picked.id, 2);
     setQuestions(qs);
-  }, []);
-
-  const handleCategoryContinue = useCallback(() => {
-    playSound("click");
-    setShowCategory(false);
     setQIndex(0);
     setSelected(null);
     setAnswered(false);
     setAnswers([]);
     setScreen("question");
   }, []);
+
 
   const handleSelect = useCallback(
     async (i: number) => {
@@ -148,9 +122,9 @@ function Index() {
       setAnswered(false);
       return;
     }
-    if (participant && category) {
+    if (category) {
       await gameService.saveGameResult({
-        participantId: participant.id,
+        participantId: "guest",
         categoryId: category.id,
         answers,
         score: answers.filter((a) => a.correct).length,
@@ -158,15 +132,15 @@ function Index() {
       });
     }
     setScreen("result");
-  }, [answers, category, participant, qIndex, questions.length]);
+  }, [answers, category, qIndex, questions.length]);
 
   const handleClaim = useCallback(async () => {
-    if (!participant) return;
-    const { code } = await gameService.claimReward(participant.id);
+    const { code } = await gameService.claimReward("guest");
     setRewardCode(code);
     playSound("reward");
     setScreen("reward");
-  }, [participant]);
+  }, []);
+
 
   const handlePlayAgain = useCallback(() => {
     playSound("click");
@@ -191,9 +165,6 @@ function Index() {
       <AnimatePresence mode="wait">
         {screen === "welcome" && <WelcomeScreen key="welcome" onStart={handleStart} />}
 
-        {screen === "register" && (
-          <RegistrationScreen key="register" onSubmit={handleRegister} submitting={submitting} />
-        )}
 
         {screen === "wheel" && (
           <section
@@ -240,11 +211,6 @@ function Index() {
         )}
       </AnimatePresence>
 
-      <AnimatePresence>
-        {showCategory && category && (
-          <CategoryResult category={category} onContinue={handleCategoryContinue} />
-        )}
-      </AnimatePresence>
     </main>
   );
 }
