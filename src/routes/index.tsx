@@ -122,9 +122,9 @@ function Index() {
       setAnswered(false);
       return;
     }
-    if (participant && category) {
+    if (category) {
       await gameService.saveGameResult({
-        participantId: participant.id,
+        participantId: "guest",
         categoryId: category.id,
         answers,
         score: answers.filter((a) => a.correct).length,
@@ -132,15 +132,15 @@ function Index() {
       });
     }
     setScreen("result");
-  }, [answers, category, participant, qIndex, questions.length]);
+  }, [answers, category, qIndex, questions.length]);
 
   const handleClaim = useCallback(async () => {
-    if (!participant) return;
-    const { code } = await gameService.claimReward(participant.id);
+    const { code } = await gameService.claimReward("guest");
     setRewardCode(code);
     playSound("reward");
     setScreen("reward");
-  }, [participant]);
+  }, []);
+
 
   const handlePlayAgain = useCallback(() => {
     playSound("click");
