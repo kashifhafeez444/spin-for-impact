@@ -7,7 +7,7 @@ export function GameHeader({ soundEnabled, onToggleSound }: Props) {
   return (
     <header className="relative z-20 mx-auto grid w-full max-w-5xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 py-4 sm:px-6">
       <div className="flex min-w-0 items-center gap-3">
-        <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-background/90 ring-1 ring-primary/40">
+        <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-sand ring-1 ring-primary/40">
           <BrandLogo className="h-8 w-8" />
         </span>
         <div className="min-w-0">
