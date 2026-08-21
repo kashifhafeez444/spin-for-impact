@@ -74,20 +74,9 @@ function Index() {
     unlockAudio();
     startAmbient();
     playSound("start");
-    setScreen("register");
+    setScreen("wheel");
   }, []);
 
-  const handleRegister = useCallback(async (p: { fullName: string; email: string }) => {
-    setSubmitting(true);
-    try {
-      const registered = await gameService.registerParticipant(p);
-      setParticipant(registered);
-      playSound("click");
-      setScreen("wheel");
-    } finally {
-      setSubmitting(false);
-    }
-  }, []);
 
   const handleSpin = useCallback(() => {
     if (spinning) return;
