@@ -165,9 +165,6 @@ function Index() {
       <AnimatePresence mode="wait">
         {screen === "welcome" && <WelcomeScreen key="welcome" onStart={handleStart} />}
 
-        {screen === "register" && (
-          <RegistrationScreen key="register" onSubmit={handleRegister} submitting={submitting} />
-        )}
 
         {screen === "wheel" && (
           <section
@@ -214,11 +211,6 @@ function Index() {
         )}
       </AnimatePresence>
 
-      <AnimatePresence>
-        {showCategory && category && (
-          <CategoryResult category={category} onContinue={handleCategoryContinue} />
-        )}
-      </AnimatePresence>
     </main>
   );
 }
