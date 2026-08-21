@@ -90,20 +90,15 @@ function Index() {
     setSpinning(false);
     const picked = categories[index]!;
     setCategory(picked);
-    setShowCategory(true);
     const qs = await gameService.getQuestions(picked.id, 2);
     setQuestions(qs);
-  }, []);
-
-  const handleCategoryContinue = useCallback(() => {
-    playSound("click");
-    setShowCategory(false);
     setQIndex(0);
     setSelected(null);
     setAnswered(false);
     setAnswers([]);
     setScreen("question");
   }, []);
+
 
   const handleSelect = useCallback(
     async (i: number) => {
