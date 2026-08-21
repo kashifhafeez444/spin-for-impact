@@ -5,15 +5,13 @@ import { AnimatePresence } from "motion/react";
 import { BackgroundEffects } from "@/components/game/BackgroundEffects";
 import { GameHeader } from "@/components/game/GameHeader";
 import { WelcomeScreen } from "@/components/game/WelcomeScreen";
-import { RegistrationScreen } from "@/components/game/RegistrationScreen";
 import { SpinWheel } from "@/components/game/SpinWheel";
-import { CategoryResult } from "@/components/game/CategoryResult";
 import { QuestionScreen } from "@/components/game/QuestionScreen";
 import { ResultScreen } from "@/components/game/ResultScreen";
 import { RewardScreen } from "@/components/game/RewardScreen";
 
 import { categories, type Category, type Question } from "@/data/esgCategories";
-import { gameService, type RegisteredParticipant } from "@/services/gameService";
+import { gameService } from "@/services/gameService";
 import {
   playSound,
   setSoundEnabled,
@@ -42,24 +40,16 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-type Screen =
-  | "welcome"
-  | "register"
-  | "wheel"
-  | "question"
-  | "result"
-  | "reward";
+type Screen = "welcome" | "wheel" | "question" | "result" | "reward";
 
 function Index() {
   const [screen, setScreen] = useState<Screen>("welcome");
   const [sound, setSound] = useState(true);
-  const [participant, setParticipant] = useState<RegisteredParticipant | null>(null);
-  const [submitting, setSubmitting] = useState(false);
 
   const [spinning, setSpinning] = useState(false);
   const [winnerIndex, setWinnerIndex] = useState<number | null>(null);
   const [category, setCategory] = useState<Category | null>(null);
-  const [showCategory, setShowCategory] = useState(false);
+
 
   const [questions, setQuestions] = useState<Question[]>([]);
   const [qIndex, setQIndex] = useState(0);
