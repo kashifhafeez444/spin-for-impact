@@ -80,7 +80,7 @@
       color-mix(in oklab, var(--primary) 18%, transparent),
       transparent 65%
     );
-  --gradient-cta: linear-gradient(135deg, var(--lime), var(--primary) 45%, var(--teal));
+  --gradient-cta: linear-gradient(135deg, var(--lime), var(--primary) 55%, oklch(0.66 0.16 140));
   --shadow-glow: 0 0 60px -12px color-mix(in oklab, var(--primary) 65%, transparent);
   --shadow-card: 0 24px 60px -28px oklch(0 0 0 / 70%);
 }
