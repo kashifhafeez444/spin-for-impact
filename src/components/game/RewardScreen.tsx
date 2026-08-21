@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
 import plantImage from "@/assets/plant.png";
+import { BrandLogo } from "./BrandLogo";
 
 type Props = { onDone: () => void; code?: string | undefined };
 
@@ -50,6 +51,10 @@ export function RewardScreen({ onDone, code }: Props) {
       <button type="button" onClick={onDone} className="btn-game mt-9 w-full max-w-xs py-5">
         Done
       </button>
+
+      <span className="mt-8 grid h-14 w-14 place-items-center rounded-2xl bg-foreground p-2 ring-1 ring-primary/30">
+        <BrandLogo className="h-full w-full" />
+      </span>
     </motion.section>
   );
 }
